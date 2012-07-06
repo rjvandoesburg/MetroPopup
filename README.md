@@ -1,4 +1,4 @@
-MetroPupup
+MetroPopup
 ==========
 
 This plugin is to get a nice metro (windows8 style) pop-up instead of the default browser pop-up.
