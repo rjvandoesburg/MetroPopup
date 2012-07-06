@@ -1,0 +1,79 @@
+* {
+	margin:0;
+	padding:0;
+	font-family: Arial;
+}
+
+#mp-overlayer {
+	display:none;
+    min-height: 100%;
+    min-width: 100%;
+    z-index: 10000;
+    position: fixed;
+    top: 0;
+    left:0;
+}
+#mp-overlayer #mp-overlayer-background {
+   	background-color: #000000;
+   	opacity: 0.5;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+   	z-index: 10001;
+}
+    
+#mp-overlayer #mp-overlayer-message {
+   	width: 100%;
+   	min-height:200px;
+   	background-color:#fff;
+   	z-index: 10002;
+   	position:relative;
+   	top: 150px;
+}
+#mp-overlayer #mp-overlayer-message #mp-message-content {
+	width: auto;
+	padding: 10px 0;
+	min-height:180px;
+	position:realive;
+	text-align: center;
+}
+#mp-overlayer #mp-overlayer-message #mp-message-content table {
+	min-width: 400px;
+	margin: 0 auto;
+	height:180px;
+}
+#mp-overlayer #mp-overlayer-message #mp-message-content table tr {
+	text-align: center;
+}
+#mp-overlayer #mp-overlayer-message #mp-message-content table tr td{  			
+	height: 50%;
+	width: 50%;
+}
+#mp-overlayer #mp-overlayer-message #mp-message-content table tr td #mp-message-content-message {
+	text-align:center;
+	display: inline-block;
+	width:100%;
+}
+#mp-overlayer #mp-overlayer-message #mp-message-content table tr td .mp-overlayer_button {
+	width: 90%;
+	background-color: #81ADBC;
+    border: 1px solid #979797;
+    clear: both;
+    color: #FFFFFF;
+    padding: 5px;
+    position: relative;
+	display:inline-block;
+	font-weight:bold;
+	font-size:12;
+	text-align:center;
+	
+}
+#mp-overlayer #mp-overlayer-message #mp-message-content table tr td .mp-overlayer_button:hover {
+	color:#343434;
+	cursor:pointer;
+}
+
+#mp-overlayer_message {
+	display:none;
+}
