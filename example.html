@@ -1,8 +1,8 @@
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="<?php echo Backend::domain(true); ?>/global/js/global.js"></script>
 
 
-    <link type="text/css" rel="stylesheet" href="test.css">
-	<script type="text/javascript" src="test.js"></script>
+    <link type="text/css" rel="stylesheet" href="<?php echo Backend::domain(true); ?>/global/css/test.css">
+<script type="text/javascript" src="<?php echo Backend::domain(true); ?>/admin/js/test.js"></script>
 <body>
 	<a href="http://google.com" data-mpmessage="message2" class="metroPopup">Button</a>
 	<form method="get">
@@ -12,13 +12,14 @@
 	
 	<a href="#" class="test">TEST</a>
 </body>
+
 <script>
 
 	$(document).ready(function(){
 		$('.metroPopup').metroPopup(
 			{
 				yes_text: 'Ja',
-				no_text: 'Nee',
+				no_text: 'Nee'
 			}
 		);
 

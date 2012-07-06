@@ -45,18 +45,20 @@
 	
 	function createOverlayer(is_default)
 	{
+		
 		append = '\
 			<div id="mp-overlayer">\
     			<div id="mp-overlayer-background"></div>\
     			<div id="mp-overlayer-message">\
     				<div id="mp-message-content">\
-    					<table id="mp-message-table">\
-						</table>\
+    					<div id="mp-message-table">\
+    						<div style="clear:both"></div>\
+    					</div>\
     				</div>\
     			</div>\
     		</div>\
 		';
-		if($('body').children('.mp-overlayer').length == 0)
+		if($('body').children('#mp-overlayer').length == 0)
 		{
 			$('body').append(append);
 		}
@@ -68,36 +70,30 @@
 		if(is_default)
 		{
 			table += '\
-				<tr>\
-					<td colspan="2">\
-						<span id="mp-message-content-message"></span>\
-					</td>\
-				</tr>\
-				<tr>\
-					<td>\
+				<div id="mp-message-content-message"></div>\
+				<div id="mp-message-content-buttons">\
+					<div class="mp-message-content-buttons-button">\
 						<a class="mp-overlayer_button" id="mp-overlayer-yes-button">\
-							' + opts.yes_text + '\
-							<input type="hidden" id="mp-overlayer-yes-button-id" />\
-						</a>\
-					</td>\
-					<td>\
+            				' + opts.yes_text + '\
+            				<input type="hidden" id="mp-overlayer-yes-button-id" />\
+            			</a>\
+					</div>\
+					<div class="mp-message-content-buttons-button">\
 						<a class="mp-overlayer_button" id="mp-overlayer-no-button">' + opts.no_text + '</a>\
-					</td>\
-				</tr>';
+					</div>\
+				</div>\
+			';
 		}
 		else {
 			table += '\
-				<tr>\
-					<td colspan="' + $(singleCallOpts.buttons).length + '">\
-						<span id="mp-message-content-message">' + singleCallOpts.message + '</span>\
-					</td>\
-				</tr>\
-				<tr>';
+					<div id="mp-message-content-message">' + singleCallOpts.message + '</div>\
+					<div id="mp-message-content-buttons">\
+				';
 			for(i = 0; i < $(singleCallOpts.buttons).length; i++)
 			{
 				button_id = singleCallOpts.buttons[i]['button_text'].replace(' ', '-');
 				table += '\
-					<td>\
+					<div class="mp-message-content-buttons-button">\
     					<a class="mp-overlayer_button" id="mp-overlayer-' + button_id + '-button"'; 
 				
 				if(singleCallOpts.buttons[i]['action'] == undefined || singleCallOpts.buttons[i]['action'] == '')
@@ -108,7 +104,6 @@
 					});
 				}
 				else {
-					console.log(singleCallOpts.buttons[i]['action']);
 					action = singleCallOpts.buttons[i]['action'];
 					
 					$(document).off('click', '#mp-overlayer #mp-overlayer-' + button_id + '-button');
@@ -120,12 +115,13 @@
 				table += '>\
 						' + singleCallOpts.buttons[i]['button_text'] + '\
 						</a>\
-					</td>';
+					</div>\
+				';
 			}
 			table += '\
-				</tr>';
+				</div>\
+			';
 		}
-		console.log(table);
 		$('#mp-overlayer #mp-message-table').html(table);
 	}
 	

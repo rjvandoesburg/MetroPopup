@@ -16,6 +16,7 @@
 #mp-overlayer #mp-overlayer-background {
    	background-color: #000000;
    	opacity: 0.5;
+	filter:alpha(opacity=50);
     min-height: 100%;
     position: absolute;
     top: 0;
@@ -31,31 +32,44 @@
    	position:relative;
    	top: 150px;
 }
-#mp-overlayer #mp-overlayer-message #mp-message-content {
+#mp-overlayer #mp-message-content {
 	width: auto;
 	padding: 10px 0;
 	min-height:180px;
 	position:realive;
 	text-align: center;
 }
-#mp-overlayer #mp-overlayer-message #mp-message-content table {
-	min-width: 400px;
+#mp-overlayer #mp-message-table {
+	width: 400px;
 	margin: 0 auto;
-	height:180px;
+	min-height:180px;
+	position:relative;
 }
-#mp-overlayer #mp-overlayer-message #mp-message-content table tr {
+#mp-overlayer #mp-message-content-buttons {
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	width:100%;
 	text-align: center;
 }
-#mp-overlayer #mp-overlayer-message #mp-message-content table tr td{  			
-	height: 50%;
+#mp-overlayer .mp-message-content-buttons-button{  			
+	float:left;
 	width: 50%;
 }
-#mp-overlayer #mp-overlayer-message #mp-message-content table tr td #mp-message-content-message {
+#mp-overlayer #mp-message-content-message {
 	text-align:center;
-	display: inline-block;
-	width:100%;
+	display: table-cell;
+	vertical-align: middle;
+	width: 400px;
+	padding-bottom:40px;
+	height: 180px;
+	overflow:auto;
 }
-#mp-overlayer #mp-overlayer-message #mp-message-content table tr td .mp-overlayer_button {
+#mp-overlayer #mp-message-content-buttons a{
+	
+}
+
+#mp-overlayer .mp-overlayer_button {
 	width: 90%;
 	background-color: #81ADBC;
     border: 1px solid #979797;
@@ -69,7 +83,7 @@
 	text-align:center;
 	
 }
-#mp-overlayer #mp-overlayer-message #mp-message-content table tr td .mp-overlayer_button:hover {
+#mp-overlayer .mp-overlayer_button:hover {
 	color:#343434;
 	cursor:pointer;
 }
