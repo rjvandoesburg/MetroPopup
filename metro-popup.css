@@ -16,7 +16,11 @@
 #mp-overlayer #mp-overlayer-background {
    	background-color: #000000;
    	opacity: 0.5;
+<<<<<<< HEAD
 	filter:alpha(opacity=50);
+=======
+   	filter:alpha(opacity=50);
+>>>>>>> 0f91cfd1cdbf0e61dc4e1207a20a9c170118a299
     min-height: 100%;
     position: absolute;
     top: 0;
