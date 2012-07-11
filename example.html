@@ -1,46 +1,96 @@
-<script type="text/javascript" src="<?php echo Backend::domain(true); ?>/global/js/global.js"></script>
-
-
-    <link type="text/css" rel="stylesheet" href="<?php echo Backend::domain(true); ?>/global/css/test.css">
-<script type="text/javascript" src="<?php echo Backend::domain(true); ?>/admin/js/test.js"></script>
-<body>
-	<a href="http://google.com" data-mpmessage="message2" class="metroPopup">Button</a>
-	<form method="get">
-		<input data-mpmessage="message1" type="submit" class="metroPopup" value="button"/>
-		<input type="hidden" value="test" name="test" />
-	</form>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Metro pop-up</title>
+    <link rel="stylesheet" href="metro-popup.css" >
+	<link type="text/css" rel="stylesheet" media="all" href="helpers/highlight.css" />
+	<style>
+	* {
+		margin:0;
+		padding:0;
+		font-family: Arial;
+	}
 	
-	<a href="#" class="test">TEST</a>
-</body>
+	.wrapper {
+		width: 960px;
+		height: 100%;
+		position:realtive;
+		margin: 0 auto;
+	}
+	
+	.header {
+		width:100%;
+		height:100px;
+	}
+	</style>
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="helpers/highlight.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
+		});
+	</script>
+	<script type="text/javascript" src="metro-popup.jquery.js"></script>
+	
+</head>
+<body>
+	<div class="wrapper">
+		<div class="header">
+			<h1>Metro pop-up</h1>
+		</div>
+		<div class="content">
+			<pre class="code" lang="js">
+			$('.metroPopup').metroPopup(
+				{
+					yes_text: 'Ja',
+					no_text: 'Nee',
+				}
+			);
+			</pre>
+			<a href="http://google.com" data-mpmessage="message2" class="metroPopup">Button</a>
+			<form method="get">
+				<input data-mpmessage="message1" type="submit" class="metroPopup" value="button"/>
+				<input type="hidden" value="test" name="test" />
+			</form>
+			
+			<a href="#" class="test">TEST</a>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$('.metroPopup').metroPopup(
+				{
+					yes_text: 'Ja',
+					no_text: 'Nee',
+				}
+			);
 
-<script>
-
-	$(document).ready(function(){
-		$('.metroPopup').metroPopup(
-			{
-				yes_text: 'Ja',
-				no_text: 'Nee'
+			test = function(){
+				alert(1);
 			}
-		);
 
-		test = function(){
-			alert(1);
-		}
-
-		$('.test').click(function(e){
-			e.preventDefault();
-			$.metroPopup({
-				message: 'This is a pop up',
-				buttons: [
-					{
-						button_text: 'ok leuk'
-					},
-					{
-						button_text: 'ok2',
-						action: test				
-					}
-				]
-			});
-		})
-	});
-</script>
+			$('.test').click(function(e){
+				e.preventDefault();
+				$.metroPopup({
+					message: 'This is a pop up',
+					buttons: [
+						{
+							button_text: 'ok leuk'
+						},
+						{
+							button_text: 'ok2',
+							action: test				
+						}
+					]
+				});
+			})
+		});
+	</script>
+	
+	<script>
+	
+	</script>
+</body>
+</html>
