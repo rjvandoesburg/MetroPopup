@@ -12,6 +12,19 @@
 		font-family: Arial;
 	}
 	
+	p {
+		margin: 10px 0;
+	}
+	
+	ol {
+		padding-left:30px;
+		marign-bottom:10px;
+	}
+	
+	body {
+		font-size: 14px;
+	}
+	
 	.wrapper {
 		width: 960px;
 		height: 100%;
@@ -22,6 +35,52 @@
 	.header {
 		width:100%;
 		height:100px;
+		background-color: #ccc;
+	}
+	
+	.content {
+		background-color: #f5f5f5;
+		padding:10px;
+	}
+	
+	#intro {
+		background-color: #f5f5f5;
+		padding:10px;
+	}
+	
+	#dialog-box {
+		background-color: #48a0cf;
+		padding:10px;
+		color: #fff;
+	}
+	
+	#dialog-box a {
+		color: #fbf952;
+	}
+	
+	#dialog-box a:hover {
+		color: #fff;
+	}
+	
+	#dialog-box .code {
+		color: #434343;
+	}
+	
+	#confirm-box {
+		background-color: #78cf48;
+		padding:10px;
+	}
+	
+	#confirm-box a {
+		color: #fbf952;
+	}
+	
+	#confirm-box a:hover {
+		color: #fff;
+	}
+	
+	#confirm-box .code {
+		color: #434343;
 	}
 	</style>
 	
@@ -40,15 +99,118 @@
 		<div class="header">
 			<h1>Metro pop-up</h1>
 		</div>
-		<div class="content">
+		<div id="intro">
+			<h2>What is it?</h2>
+			<p>
+				In short: It's a pop-up window that is to replace the boring browser pop-up when you want to ask for confirmation or show a dialog box with JavaScript.
+			</p>
+			<p>
+				I got insired to make this after i saw the IE10 pop-up on windows8,
+			</p>
+			<p>
+				Now by replace i don't mean when you do an alert, this will show. You will need to call it in order to show.
+			</p>
+			<h2>So how does it work?</h2>
+			<p>
+				This plugin has multiple ways to work:
+			</p>
+				<ol>
+					<li><a href="#dialog-box">A dialog box</a></li>
+					<li><a href="#confirm-box">A confirm box</a></li>
+				</ol>
+			<p>
+				The dialog box will show custom text and one button to make it go away.
+				Now for the second one, it says "confirm box" however, by changing the options you can customise it to fill your need. (see <a href="#configure">options</a> for more information)
+				
+			</p>
+		</div>
+		<div id="dialog-box">
+			<h3>Dialog box:</h3>
 			<pre class="code" lang="js">
-			$('.metroPopup').metroPopup(
-				{
-					yes_text: 'Ja',
-					no_text: 'Nee',
-				}
-			);
+			
+$(document).ready(function(){
+	$('.example1').click(function(){
+		$.metroPopup({
+			message: 'This is a pop up (example 1)'
+		});
+	});
+});
 			</pre>
+			<p>
+				<a href="#" class="example1">Click here for an example</a>
+			</p>
+			<p>
+				That was a simple pop-up with a message. Now perhaps you want it to say something else instead of "Ok". 
+				You can change it by adding in an option
+			</p>
+			<pre class="code" lang="js">
+			
+$(document).ready(function(){
+	$('.example2').click(function(){
+		$.metroPopup({
+			message: 'This is a pop up (example 2)',
+			buttons: [
+				{
+					button_text: 'Click here to go back'
+				}
+			]
+		});
+	});
+});
+			</pre>
+			<p>
+				<a href="#" class="example2">Click here for an example</a>
+			</p>
+			<p>
+				Great! Now Let's add another button to this pop-up. And why not add a function to it that needs to be executed when a user presses the second button.
+			</p>
+			<pre class="code" lang="js">
+			
+$(document).ready(function(){
+	$('.example3').click(function(){
+		$.metroPopup({
+			message: 'This is a pop up (example 3)',
+			buttons: [
+				{
+					button_text: 'Click here to go back'
+				},
+				{
+					button_text: 'A second button',
+					action: an_action_to_execute
+				}
+			]
+		});
+	});
+	
+	an_action_to_execute = function(){
+		alert('Just an alert to show you it executes this function, you can for instance redirect some one to somewhere.');
+	}
+});
+			</pre>
+			<p>
+				<a href="#" class="example3">Click here for an example</a>
+			</p>
+			<p>
+				<small>*For the function you need to assing it to a variable and when you add it to a button, don't add the () or else it will fire the function right from the start.</small>
+			</p>
+	</div>
+	<div id="confirm-box">
+			<h3>Confirm box</h3>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			<a href="http://google.com" data-mpmessage="message2" class="metroPopup">Button</a>
 			<form method="get">
 				<input data-mpmessage="message1" type="submit" class="metroPopup" value="button"/>
@@ -60,6 +222,46 @@
 	</div>
 	<script>
 		$(document).ready(function(){
+
+			$('.example1').click(function(e){
+				e.preventDefault();
+				$.metroPopup({
+					message: 'This is a pop up (example 1)'
+				});
+			});
+			
+			$('.example2').click(function(e){
+				e.preventDefault();
+				$.metroPopup({
+					message: 'This is a pop up (example 2)',
+					buttons: [
+						{
+							button_text: 'Click here to go back'
+						}
+					]
+				});
+			});
+			
+			$('.example3').click(function(e){
+				e.preventDefault();
+				$.metroPopup({
+					message: 'This is a pop up (example 3)',
+					buttons: [
+						{
+							button_text: 'Click here to go back'
+						},
+						{
+							button_text: 'A second button',
+							action: an_action_to_execute
+						}
+					]
+				});
+			});
+			
+			an_action_to_execute = function(){
+				alert('Just an alert to show you it executes this function, you can for instance redirect some one to somewhere.');
+			}
+			
 			$('.metroPopup').metroPopup(
 				{
 					yes_text: 'Ja',

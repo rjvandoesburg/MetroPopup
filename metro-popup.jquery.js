@@ -45,7 +45,6 @@
 	
 	function createOverlayer(is_default)
 	{
-		
 		append = '\
 			<div id="mp-overlayer">\
     			<div id="mp-overlayer-background"></div>\
@@ -80,6 +79,7 @@
 					</div>\
 					<div class="mp-message-content-buttons-button">\
 						<a class="mp-overlayer_button" id="mp-overlayer-no-button">' + opts.no_text + '</a>\
+						<div style="clear:both;"></div>\
 					</div>\
 				</div>\
 			';
@@ -89,25 +89,26 @@
 					<div id="mp-message-content-message">' + singleCallOpts.message + '</div>\
 					<div id="mp-message-content-buttons">\
 				';
+			width = (100 / $(singleCallOpts.buttons).length);
 			for(i = 0; i < $(singleCallOpts.buttons).length; i++)
 			{
-				button_id = singleCallOpts.buttons[i]['button_text'].replace(' ', '-');
+				//button_id = singleCallOpts.buttons[i]['button_text'].replace(' ', '-');
 				table += '\
-					<div class="mp-message-content-buttons-button">\
-    					<a class="mp-overlayer_button" id="mp-overlayer-' + button_id + '-button"'; 
+					<div style="width:' + width + '%" class="mp-message-content-buttons-button">\
+    					<a class="mp-overlayer_button" id="mp-overlayer-' + i + '-button"'; 
 				
 				if(singleCallOpts.buttons[i]['action'] == undefined || singleCallOpts.buttons[i]['action'] == '')
 				{
-					$(document).off('click', '#mp-overlayer #mp-overlayer-' + button_id + '-button');
-					$(document).on('click', '#mp-overlayer #mp-overlayer-' + button_id + '-button', function() {
+					$(document).off('click', '#mp-overlayer #mp-overlayer-' + i + '-button');
+					$(document).on('click', '#mp-overlayer #mp-overlayer-' + i + '-button', function() {
 						$.mpHide();
 					});
 				}
 				else {
 					action = singleCallOpts.buttons[i]['action'];
 					
-					$(document).off('click', '#mp-overlayer #mp-overlayer-' + button_id + '-button');
-					$(document).on('click', '#mp-overlayer #mp-overlayer-' + button_id + '-button', function() {
+					$(document).off('click', '#mp-overlayer #mp-overlayer-' + i + '-button');
+					$(document).on('click', '#mp-overlayer #mp-overlayer-' + i + '-button', function() {
 						action();
 						$.mpHide();
 					});
@@ -119,6 +120,7 @@
 				';
 			}
 			table += '\
+				<div style="clear:both;"></div>\
 				</div>\
 			';
 		}
@@ -126,7 +128,7 @@
 	}
 	
 	$(document).on("click", '#mp-overlayer #mp-overlayer-no-button', function(e){
-		$('#mp-overlayer').hide();
+		$.mpHide();
 	});
 	
 	$(document).on("click", '#mp-overlayer #mp-overlayer-yes-button', function(e){
