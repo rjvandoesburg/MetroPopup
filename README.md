@@ -14,7 +14,7 @@ Working in:
 - Safari 5.1.7
 - Opera 12 (however, there seems to be a bug with the opacity)
 
-
+Live demo: http://rjvandoesburg.com/demos/metro_popup/
 
 I hope to add more usefull features to it in the future.
 Got an idea? 
