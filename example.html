@@ -3,9 +3,15 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Metro pop-up</title>
-    <link rel="stylesheet" href="metro-popup.css" >
+    <link rel="stylesheet" href="metro-popup.min.css" >
 	<link type="text/css" rel="stylesheet" media="all" href="helpers/highlight.css" />
 	<style>
+	@font-face {
+		font-family:"Asenine";
+		src:url("helpers/font/ASENINE_.eot?") format("eot"),url("helpers/font/ASENINE_.woff") format("woff"),url("helpers/font/ASENINE_.ttf") format("truetype"),url("helpers/font/ASENINE_.svg#Asenine") format("svg");
+		font-weight:normal;font-style:normal;
+	}
+
 	* {
 		margin:0;
 		padding:0;
@@ -21,6 +27,25 @@
 		marign-bottom:10px;
 	}
 	
+	h1 {
+		font-family:"Asenine";
+		font-size: 90px;
+    	text-align: center;
+		color: #fff;
+		padding-top:20px;
+	}
+	
+	h2 {
+		font-family:"Asenine";
+		font-size: 50px;
+	}
+	
+	h3 {
+		font-family:"Asenine";
+		font-size:30px;
+		margin-bottom:10px;
+	}
+	
 	body {
 		font-size: 14px;
 	}
@@ -30,12 +55,14 @@
 		height: 100%;
 		position:realtive;
 		margin: 0 auto;
+		box-shadow: 0 0 10px #000000;
 	}
 	
 	.header {
 		width:100%;
-		height:100px;
-		background-color: #ccc;
+		height:200px;
+		background: url('line.png') repeat-x left bottom #ccc;
+		
 	}
 	
 	.content {
@@ -48,10 +75,34 @@
 		padding:10px;
 	}
 	
+	#setup {
+		background-color: #eac221;
+		padding:10px;
+		color: #343434;
+		border:3px solid #eaaf21;
+		border-left:none;
+		border-right:none;
+	}
+	
+	#setup a {
+		color: #fbf952;
+	}
+	
+	#setup a:hover {
+		color: #fff;
+	}
+	
+	#setup .code {
+		color: #343434;
+	}
+	
 	#dialog-box {
 		background-color: #48a0cf;
 		padding:10px;
-		color: #fff;
+		color: #343434;
+		border:3px solid #2983b3;
+		border-left:none;
+		border-right:none;	
 	}
 	
 	#dialog-box a {
@@ -63,12 +114,15 @@
 	}
 	
 	#dialog-box .code {
-		color: #434343;
+		color: #343434;
 	}
 	
 	#confirm-box {
-		background-color: #78cf48;
+		background-color: #6cbd3f;
 		padding:10px;
+		border:3px solid #4ca51b;
+		border-left:none;
+		border-right:none;	
 	}
 	
 	#confirm-box a {
@@ -80,7 +134,7 @@
 	}
 	
 	#confirm-box .code {
-		color: #434343;
+		color: #343434;
 	}
 	</style>
 	
@@ -91,7 +145,7 @@
 			$('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
 		});
 	</script>
-	<script type="text/javascript" src="metro-popup.jquery.js"></script>
+	<script type="text/javascript" src="jquery.metro-popup.min.js"></script>
 	
 </head>
 <body>
@@ -120,8 +174,22 @@
 				</ol>
 			<p>
 				The dialog box will show custom text and one button to make it go away.
-				Now for the second one, it says "confirm box" however, by changing the options you can customise it to fill your need. (see <a href="#configure">options</a> for more information)
+				Now for the second one, it says "confirm box" however, by changing the options you can customise it to fill your need. <!-- (see <a href="#configure">options</a> for more information) -->
 				
+			</p>
+		</div>
+		<div id="setup">
+			<h3>Setup:</h3>
+			<p>
+				To get started add 2 lines to your files in order to use (or add the contents of the files to your own code).
+			</p>
+			<pre class="code" lang="html">
+						
+	&lt;link rel="stylesheet" href="metro-popup.min.css" &gt;
+	&lt;script type="text/javascript" src="jquery.metro-popup.min.js"&gt;&lt;/script &gt;
+			</pre>
+			<p>
+				These files are minified, if you wish to edit the files, they are located in the sub-folder "uncompressed".
 			</p>
 		</div>
 		<div id="dialog-box">
@@ -193,31 +261,79 @@ $(document).ready(function(){
 			<p>
 				<small>*For the function you need to assing it to a variable and when you add it to a button, don't add the () or else it will fire the function right from the start.</small>
 			</p>
-	</div>
-	<div id="confirm-box">
+		</div>
+		<div id="confirm-box">
 			<h3>Confirm box</h3>
+			<p>
+				Now maybe you just want to ask the user yes or no to an action, say submitting a form or clicking a link to go somewhere else.
+			</p>
+			<p>First we have our form. Note that you need to use "data-mpmessage" tag to set the message box question. By default this is "Are you sure you want to do this"</p>
+			<pre class="code" lang="html">
 			
+&lt;form method="get"&gt;
+	&lt;input type="text" name="input1" /&gt;
+	&lt;input type="submit" class="example4" data-mpmessage="This is a confirmation box (example4)" value="Submit this form" /&gt;
+&lt;/form&gt;
+			</pre>
+			<p>And then the code</p>
+			<pre class="code" lang="js">
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			<a href="http://google.com" data-mpmessage="message2" class="metroPopup">Button</a>
+$(document).ready(function(){
+	$('.example4').metroPopup();
+});
+			</pre>
 			<form method="get">
-				<input data-mpmessage="message1" type="submit" class="metroPopup" value="button"/>
-				<input type="hidden" value="test" name="test" />
+			    <input type="text" name="input1" value="test value" />
+			    <input type="submit" class="example4" data-mpmessage="This is a confirmation box (example4)" value="Submit this form" />
 			</form>
+			<p>
+				Now on this confirm box we can also change the text on the buttons.
+			</p>
+			<pre class="code" lang="html">
 			
-			<a href="#" class="test">TEST</a>
+&lt;form method="get"&gt;
+	&lt;input type="text" name="input1" /&gt;
+	&lt;input type="submit" class="example5" data-mpmessage="This is a confirmation box (example5)" value="Submit this form" /&gt;
+&lt;/form&gt;
+			</pre>
+			<p>And then the code</p>
+			<pre class="code" lang="js">
+			
+$(document).ready(function(){
+	$('.example5').metroPopup(
+	{
+		yes_text: 'Positive!',
+		no_text: 'Negative!'
+	});
+});
+			</pre>
+			<form method="get">
+			    <input type="text" name="input1" value="test value" />
+			    <input type="submit" class="example5" data-mpmessage="This is a confirmation box (example5)" value="Submit this form" />
+			</form>
+			<p>
+				Now you can re-add the ".metroPopup" as many times with different text values if you like, and if you just name classes the same they will use the same options.
+			</p>
+			<p>
+				Now as a final we can add a simple confirm on an "A" tag.
+			</p>
+			<pre class="code" lang="html">
+
+&lt;a href="http://www.google.com" taget="_blank" data-mpmessage="Do you wish to open google in a new tab?" class="example6"&gt;Example 6&lt;/a&gt;
+			</pre>
+			<p>And then the code</p>
+			<pre class="code" lang="js">
+			
+$(document).ready(function(){
+	$('.example6').metroPopup();
+});
+			</pre>
+			<p>
+				<a href="http://www.google.com" target="_blank" data-mpmessage="Do you wish to open google in a new tab?" class="example6">Example 6</a>
+			</p>
+			<p>
+				By adding in a target to the link you can specify how the new page should be opened.
+			</p>
 		</div>
 	</div>
 	<script>
@@ -262,37 +378,16 @@ $(document).ready(function(){
 				alert('Just an alert to show you it executes this function, you can for instance redirect some one to somewhere.');
 			}
 			
-			$('.metroPopup').metroPopup(
-				{
-					yes_text: 'Ja',
-					no_text: 'Nee',
-				}
-			);
-
-			test = function(){
-				alert(1);
-			}
-
-			$('.test').click(function(e){
-				e.preventDefault();
-				$.metroPopup({
-					message: 'This is a pop up',
-					buttons: [
-						{
-							button_text: 'ok leuk'
-						},
-						{
-							button_text: 'ok2',
-							action: test				
-						}
-					]
-				});
-			})
+			$('.example4').metroPopup();
+			
+			$('.example5').metroPopup(
+			{
+				yes_text: 'Positive!',
+				no_text: 'Negative!'
+			});
+			
+			$('.example6').metroPopup();
 		});
-	</script>
-	
-	<script>
-	
 	</script>
 </body>
 </html>
