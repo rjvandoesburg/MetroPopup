@@ -79,7 +79,6 @@
 		table = '';
 		if(is_default)
 		{
-			console.log(opts);
 			table += '\
 				<div id="mp-message-content-message"></div>\
 				<div id="mp-message-content-buttons">\
@@ -148,7 +147,13 @@
 		
 		if($(obj[id]).prop('tagName') == 'A')
 		{
-			document.location = $(obj[id]).attr('href');
+			if($(obj[id]).attr('target') != undefined)
+			{		
+				window.open($(obj[id]).attr('href'), $(obj[id]).attr('target')); 
+			}
+			else {
+				document.location = $(obj[id]).attr('href');
+			}		
 		}
 		else if($(obj[id]).prop('tagName') == 'INPUT')
 		{
