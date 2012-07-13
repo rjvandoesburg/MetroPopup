@@ -244,22 +244,20 @@ $(document).ready(function(){
 				},
 				{
 					button_text: 'A second button',
-					action: an_action_to_execute
+					action: function(){
+						alert('Just an alert to show you it executes this function, you can for instance redirect some one to somewhere.');
+					}
 				}
 			]
 		});
 	});
-	
-	an_action_to_execute = function(){
-		alert('Just an alert to show you it executes this function, you can for instance redirect some one to somewhere.');
-	}
 });
 			</pre>
 			<p>
 				<a href="#" class="example3">Click here for an example</a>
 			</p>
 			<p>
-				<small>*For the function you need to assing it to a variable and when you add it to a button, don't add the () or else it will fire the function right from the start.</small>
+				
 			</p>
 		</div>
 		<div id="confirm-box">
@@ -368,15 +366,13 @@ $(document).ready(function(){
 						},
 						{
 							button_text: 'A second button',
-							action: an_action_to_execute
+							action: function(){
+								alert('Just an alert to show you it executes this function, you can for instance redirect some one to somewhere.');
+							}
 						}
 					]
 				});
 			});
-			
-			an_action_to_execute = function(){
-				alert('Just an alert to show you it executes this function, you can for instance redirect some one to somewhere.');
-			}
 			
 			$('.example4').metroPopup();
 			

@@ -9,7 +9,7 @@
 	{
 		return this.each(function() 
 		{
-			opts[objcounter] = $.extend({}, $.fn.metroPopup.defaults, options);
+			opts[objcounter] = $.extend(true, $.fn.metroPopup.defaults, options);
     		$(this).click(onClick);
     		$(this).attr('data-mpid', objcounter);
     		
@@ -41,7 +41,7 @@
 	};
 	
 	$.metroPopup = function(options){
-		singleCallOpts = $.extend({}, $.metroPopup.defaults, options);
+		singleCallOpts = $.extend(true, $.metroPopup.defaults, options);
 		
 		createOverlayer(false);
 		setTable(false);
@@ -79,17 +79,73 @@
 		table = '';
 		if(is_default)
 		{
+			yes_style = opts[id].yes_color['style'];
+			yes_color = '';
+			if(opts[id].yes_color['custom'] == true)
+			{
+				yes_color = 'style="\
+					background-color:#' + opts[id].yes_color['background'] + ';\
+					border-color:#' + opts[id].yes_color['border'] + ';\
+					color:#' + opts[id].yes_color['text_color'] + ';\
+				"';
+				
+				$(document).off('mouseenter', '#mp-overlayer #mp-overlayer-yes-button');
+				$(document).off('mouseleave', '#mp-overlayer #mp-overlayer-yes-button');
+				$(document).on({
+    				mouseenter: function() {
+    					$(this).css({'color': '#' + opts[id].yes_color['hover_text_color']});
+    				},
+    				mouseleave: function() {
+    					$(this).css({'color': '#' + opts[id].yes_color['text_color']});
+    				}
+				},'#mp-overlayer #mp-overlayer-yes-button');
+			}
+			else {
+				if(!check_style(yes_style))
+				{
+					yes_style = 'default';
+				}
+			}
+			
+			no_style = opts[id].no_color['style'];
+			no_color = '';
+			if(opts[id].no_color['custom'] == true)
+			{
+				no_color = 'style="\
+					background-color:#' + opts[id].no_color['background'] + ';\
+					border-color:#' + opts[id].no_color['background'] + ';\
+					color:#' + opts[id].no_color['text_color'] + ';\
+				"';
+				
+				$(document).off('mouseenter', '#mp-overlayer #mp-overlayer-no-button');
+				$(document).off('mouseleave', '#mp-overlayer #mp-overlayer-no-button');
+				$(document).on({
+    				mouseenter: function() {
+    					$(this).css({'color': '#' + opts[id].no_color['hover_text_color']});
+    				},
+    				mouseleave: function() {
+    					$(this).css({'color': '#' + opts[id].no_color['text_color']});
+    				}
+				},'#mp-overlayer #mp-overlayer-no-button');
+			}
+			else {
+				if(!check_style(no_style))
+				{
+					no_style = 'default';
+				}
+			}
+			
 			table += '\
 				<div id="mp-message-content-message"></div>\
 				<div id="mp-message-content-buttons">\
 					<div style="width:50%;" class="mp-message-content-buttons-button">\
-						<a class="mp-overlayer_button" id="mp-overlayer-yes-button">\
+						<a class="mp-overlayer_button_' + yes_style + '" ' + yes_color + ' id="mp-overlayer-yes-button">\
             				' + opts[id].yes_text + '\
             				<input type="hidden" id="mp-overlayer-yes-button-id" />\
             			</a>\
 					</div>\
 					<div style="width:50%;" class="mp-message-content-buttons-button">\
-						<a class="mp-overlayer_button" id="mp-overlayer-no-button">' + opts[id].no_text + '</a>\
+						<a class="mp-overlayer_button_' + no_style + '" ' + no_color + ' id="mp-overlayer-no-button">' + opts[id].no_text + '</a>\
 						<div style="clear:both;"></div>\
 					</div>\
 				</div>\
@@ -103,10 +159,39 @@
 			width = (100 / $(singleCallOpts.buttons).length);
 			for(i = 0; i < $(singleCallOpts.buttons).length; i++)
 			{
-				//button_id = singleCallOpts.buttons[i]['button_text'].replace(' ', '-');
+				style = singleCallOpts.buttons[i].color['style'];
+				color = '';
+				if(singleCallOpts.buttons[i].color['custom'] == true)
+				{
+					color = 'style="\
+						background-color:#' + singleCallOpts.buttons[i].color['background'] + ';\
+						border-color:#' + singleCallOpts.buttons[i].color['border'] + ';\
+						color:#' + singleCallOpts.buttons[i].color['text_color'] + ';\
+					"';
+					
+					color_hover = singleCallOpts.buttons[i].color['hover_text_color'];
+					color_normal = singleCallOpts.buttons[i].color['text_color']
+					$(document).off('mouseenter', '#mp-overlayer #mp-overlayer-' + i + '-button');
+					$(document).off('mouseleave', '#mp-overlayer #mp-overlayer-' + i + '-button');
+					$(document).on({
+	    				mouseenter: function() {
+	    					$(this).css({'color': '#' + color_hover});
+	    				},
+	    				mouseleave: function() {
+	    					$(this).css({'color': '#' + color_normal});
+	    				}
+					},'#mp-overlayer #mp-overlayer-' + i + '-button');
+				}
+				else {
+					if(!check_style(style))
+					{
+						style = 'default';
+					}
+				}
+				
 				table += '\
 					<div style="width:' + width + '%" class="mp-message-content-buttons-button">\
-    					<a class="mp-overlayer_button" id="mp-overlayer-' + i + '-button"'; 
+    					<a class="mp-overlayer_button_' + style + '" ' + color + ' id="mp-overlayer-' + i + '-button"'; 
 				
 				if(singleCallOpts.buttons[i]['action'] == undefined || singleCallOpts.buttons[i]['action'] == '')
 				{
@@ -138,6 +223,21 @@
 		$('#mp-overlayer #mp-message-table').html(table);
 	}
 	
+	function check_style(needle)
+	{
+		haystack = Array('default','red','orange', 'green');
+		
+        for (key in haystack) 
+        {            
+    		if (haystack[key] == needle) 
+    		{
+                	return true;
+            }
+        }
+        
+	    return false;
+	}
+	
 	$(document).on("click", '#mp-overlayer #mp-overlayer-no-button', function(e){
 		$.mpHide();
 	});
@@ -165,15 +265,39 @@
 	
 	$.fn.metroPopup.defaults = {
 		yes_text: 'Yes',
-		no_text: 'No'
+		yes_color: {
+			style: 'default',
+			custom: false,
+			background: '81ADBC',
+			border: '979797',
+			text_color: 'FFFFFF',
+			hover_text_color: '343434'
+		},
+		no_text: 'No',
+		no_color: {
+			style: 'default',
+			custom: false,
+			background: '81ADBC',
+			border: '979797',
+			text_color: 'FFFFFF',
+			hover_text_color: '343434'
+		},
 	}
 	
 	$.metroPopup.defaults = {
+		message: '',
 		buttons: [{
 			button_text: 'Ok',
-			action: ''
-		}],
-		message: ''
+			action: '',
+			color: {
+				style: 'default',
+				custom: false,
+				background: '81ADBC',
+				border: '979797',
+				text_color: 'FFFFFF',
+				hover_text_color: '343434'
+			}
+		}]
 	}
 	
 })( jQuery );

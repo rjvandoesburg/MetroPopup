@@ -64,7 +64,7 @@
 	overflow:auto;
 }
 
-#mp-overlayer .mp-overlayer_button {
+#mp-overlayer .mp-overlayer_button_default {
 	width: 90%;
 	background-color: #81ADBC;
     border: 1px solid #979797;
@@ -75,11 +75,56 @@
 	display:inline-block;
 	font-weight:bold;
 	font-size:12;
-	text-align:center;
-	
+	text-align:center;	
 }
 
-#mp-overlayer .mp-overlayer_button:hover {
+#mp-overlayer .mp-overlayer_button_red {
+	width: 90%;
+	background-color: #be6a6a;
+    border: 1px solid #800000;
+    clear: both;
+    color: #FFFFFF;
+    padding: 5px;
+    position: relative;
+	display:inline-block;
+	font-weight:bold;
+	font-size:12;
+	text-align:center;	
+}
+
+#mp-overlayer .mp-overlayer_button_orange {
+	width: 90%;
+	background-color: #f1ab58;
+    border: 1px solid #f39321;
+    clear: both;
+    color: #FFFFFF;
+    padding: 5px;
+    position: relative;
+	display:inline-block;
+	font-weight:bold;
+	font-size:12;
+	text-align:center;	
+}
+
+#mp-overlayer .mp-overlayer_button_green {
+	width: 90%;
+	background-color: #72ac5b;
+    border: 1px solid #008000;
+    clear: both;
+    color: #FFFFFF;
+    padding: 5px;
+    position: relative;
+	display:inline-block;
+	font-weight:bold;
+	font-size:12;
+	text-align:center;	
+}
+
+#mp-overlayer .mp-overlayer_button_default:hover,
+#mp-overlayer .mp-overlayer_button_red:hover,
+#mp-overlayer .mp-overlayer_button_orange:hover,
+#mp-overlayer .mp-overlayer_button_green:hover 
+{
 	color:#343434;
 	cursor:pointer;
 }
