@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Metro pop-up</title>
-    <link rel="stylesheet" href="metro-popup.min.css" >
+    <link rel="stylesheet" href="uncompressed/metro-popup.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="helpers/highlight.css" />
 	<style>
 	@font-face {
@@ -136,6 +136,26 @@
 	#confirm-box .code {
 		color: #343434;
 	}
+	
+	#colors {
+		background-color: #6cbd3f;
+		padding:10px;
+		border:3px solid #4ca51b;
+		border-left:none;
+		border-right:none;	
+	}
+	
+	#colors a {
+		color: #fbf952;
+	}
+	
+	#colors a:hover {
+		color: #fff;
+	}
+	
+	#colors .code {
+		color: #343434;
+	}
 	</style>
 	
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
@@ -145,7 +165,7 @@
 			$('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
 		});
 	</script>
-	<script type="text/javascript" src="jquery.metro-popup.min.js"></script>
+	<script type="text/javascript" src="uncompressed/jquery.metro-popup.js"></script>
 	
 </head>
 <body>
@@ -217,11 +237,9 @@ $(document).ready(function(){
 	$('.example2').click(function(){
 		$.metroPopup({
 			message: 'This is a pop up (example 2)',
-			buttons: [
-				{
-					button_text: 'Click here to go back'
-				}
-			]
+			buttons: {
+				button_text: 'Click here to go back'
+			}
 		});
 	});
 });
@@ -230,7 +248,10 @@ $(document).ready(function(){
 				<a href="#" class="example2">Click here for an example</a>
 			</p>
 			<p>
-				Great! Now Let's add another button to this pop-up. And why not add a function to it that needs to be executed when a user presses the second button.
+				Great! Now Let's add another button to this pop-up*. And why not add a function to it that needs to be executed when a user presses the second button.
+			</p>
+			<p>
+				*Note that we changed "button" to "buttons" and made it an array.
 			</p>
 			<pre class="code" lang="js">
 			
@@ -317,7 +338,7 @@ $(document).ready(function(){
 			</p>
 			<pre class="code" lang="html">
 
-&lt;a href="http://www.google.com" taget="_blank" data-mpmessage="Do you wish to open google in a new tab?" class="example6"&gt;Example 6&lt;/a&gt;
+&lt;a href="http://www.google.com" target="_blank" data-mpmessage="Do you wish to open google in a new tab?" class="example6"&gt;Example 6&lt;/a&gt;
 			</pre>
 			<p>And then the code</p>
 			<pre class="code" lang="js">
@@ -331,6 +352,69 @@ $(document).ready(function(){
 			</p>
 			<p>
 				By adding in a target to the link you can specify how the new page should be opened.
+			</p>
+		</div>
+		<div id="colors">
+			<h3>Colors!</h3>
+			<p>
+				Now maybe you want to change the colors of the pop-up to suit your style/website.
+			</p>
+			<p>
+				I've included 4 different styles: Blue (default), red, orange and green. You can set the button color by adding in the style of the button.
+			</p>
+			<pre class="code" lang="html">
+
+&lt;a href="http://www.google.com" target="_blank" data-mpmessage="Do you wish to open google in a new tab?" class="example6"&gt;Example 6&lt;/a&gt;
+			</pre>
+			<p>
+				For the button you need to add the color attribute and within that you add the style.
+			</p>
+			<pre class="code" lang="js">
+			
+$('.example7').click(function(){
+	$.metroPopup({
+		message: 'Test',
+		buttons: [{
+			color: {
+				style: 'red'
+			}
+		},
+		{
+			color: {
+				style: 'orange'
+			}
+		},
+		{
+			color: {
+				style: 'green'
+			}
+		}]
+	});
+});
+
+			</pre>
+			<p>
+				<a href="#" class="example7">Example 7</a>
+			</p>
+			<p>
+				Now if you don't want to go in the css and change or add styles you can do that with some extra options within the button color attribute
+			</p>
+			<pre class="code" lang="js">
+			
+$('.example8').click(function(){
+	$.metroPopup({
+		message: 'Test',
+		buttons: {
+			color: {
+				style: 'red'
+			}
+		}
+	});
+});
+
+			</pre>
+			<p>
+				<a href="#" class="example8">Example 8</a>
 			</p>
 		</div>
 	</div>
@@ -348,11 +432,9 @@ $(document).ready(function(){
 				e.preventDefault();
 				$.metroPopup({
 					message: 'This is a pop up (example 2)',
-					buttons: [
-						{
+					button: {
 							button_text: 'Click here to go back'
 						}
-					]
 				});
 			});
 			
@@ -383,6 +465,43 @@ $(document).ready(function(){
 			});
 			
 			$('.example6').metroPopup();
+			
+			$('.example7').click(function(e){
+				e.preventDefault();
+				$.metroPopup({
+					message: 'Shiny colors',
+					buttons: [{
+						button_text: 'Red button!',
+						color: {
+							style: 'red'
+						}
+					},
+					{
+						button_text: 'Orange button!',
+						color: {
+							style: 'orange'
+						}
+					},
+					{
+						button_text: 'Green button!',
+						color: {
+							style: 'green'
+						}
+					}]
+				});
+			});
+			
+			$('.example8').click(function(e){
+				e.preventDefault();
+				$.metroPopup({
+					message: 'Test',
+					button: {
+						color: {
+							style: 'red'
+						}
+					}
+				});
+			});
 		});
 	</script>
 </body>

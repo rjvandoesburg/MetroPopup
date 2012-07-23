@@ -1,6 +1,6 @@
 (function( $ ) {
 	
-	option_counter = 0
+	option_counter = 0;
 	opts = new Array();
 	obj = new Array();
 	objcounter = 0;
@@ -38,10 +38,29 @@
 			
 			return false;
 		}
-	};
+	}
 	
-	$.metroPopup = function(options){
-		singleCallOpts = $.extend(true, $.metroPopup.defaults, options);
+	$.metroPopup = function(options)
+	{
+		singleCallOpts = '';
+		multiple_buttons = false;
+		if($(options.buttons).length > 0)
+		{
+			arr = $.metroPopup.multiple;
+			ls = arr.buttons[0];
+			new_arr = options;
+			for(var i = 0; i < $(options.buttons).length; i++)
+			{
+				options.buttons[i] = $.extend(true, $.metroPopup.single.button, options.buttons[i]);
+			}
+
+			singleCallOpts = options;
+			multiple_buttons = true;
+		}
+		else {
+			singleCallOpts = $.extend(true, $.metroPopup.single, options);
+		}
+		
 		
 		createOverlayer(false);
 		setTable(false);
@@ -156,23 +175,89 @@
 					<div id="mp-message-content-message">' + singleCallOpts.message + '</div>\
 					<div id="mp-message-content-buttons">\
 				';
-			width = (100 / $(singleCallOpts.buttons).length);
-			for(i = 0; i < $(singleCallOpts.buttons).length; i++)
+
+
+			if(multiple_buttons)
 			{
-				style = singleCallOpts.buttons[i].color['style'];
+				width = (100 / $(singleCallOpts.buttons).length);
+				for(var i = 0; i < $(singleCallOpts.buttons).length; i++)
+				{
+					style = singleCallOpts.buttons[i].color['style'];
+					color = '';
+					if(singleCallOpts.buttons[i].color['custom'] == true)
+					{
+						color = 'style="\
+							background-color:#' + singleCallOpts.buttons[i].color['background'] + ';\
+							border-color:#' + singleCallOpts.buttons[i].color['border'] + ';\
+							color:#' + singleCallOpts.buttons[i].color['text_color'] + ';\
+						"';
+						
+						color_hover = singleCallOpts.buttons[i].color['hover_text_color'];
+						color_normal = singleCallOpts.buttons[i].color['text_color'];
+						$(document).off('mouseenter', '#mp-overlayer #mp-overlayer-' + i + '-button');
+						$(document).off('mouseleave', '#mp-overlayer #mp-overlayer-' + i + '-button');
+						$(document).on({
+		    				mouseenter: function() {
+		    					$(this).css({'color': '#' + color_hover});
+		    				},
+		    				mouseleave: function() {
+		    					$(this).css({'color': '#' + color_normal});
+		    				}
+						},'#mp-overlayer #mp-overlayer-' + i + '-button');
+					}
+					else {
+						if(!check_style(style))
+						{
+							style = 'default';
+						}
+					}
+					
+					table += '\
+						<div style="width:' + width + '%" class="mp-message-content-buttons-button">\
+	    					<a class="mp-overlayer_button_' + style + '" ' + color + ' id="mp-overlayer-' + i + '-button"'; 
+					
+					if(singleCallOpts.buttons[i]['action'] == undefined || singleCallOpts.buttons[i]['action'] == '')
+					{
+						$(document).off('click', '#mp-overlayer #mp-overlayer-' + i + '-button');
+						$(document).on('click', '#mp-overlayer #mp-overlayer-' + i + '-button', function() {
+							$.mpHide();
+						});
+					}
+					else {
+						action = singleCallOpts.buttons[i]['action'];
+						
+						$(document).off('click', '#mp-overlayer #mp-overlayer-' + i + '-button');
+						$(document).on('click', '#mp-overlayer #mp-overlayer-' + i + '-button', function() {
+							action();
+							$.mpHide();
+						});
+					}
+					table += '>\
+							' + singleCallOpts.buttons[i]['button_text'] + '\
+							</a>\
+						</div>\
+					';
+				}
+				table += '\
+					<div style="clear:both;"></div>\
+					</div>\
+				';
+			}
+			else {
+				style = singleCallOpts.button.color['style'];
 				color = '';
-				if(singleCallOpts.buttons[i].color['custom'] == true)
+				if(singleCallOpts.button.color['custom'] == true)
 				{
 					color = 'style="\
-						background-color:#' + singleCallOpts.buttons[i].color['background'] + ';\
-						border-color:#' + singleCallOpts.buttons[i].color['border'] + ';\
-						color:#' + singleCallOpts.buttons[i].color['text_color'] + ';\
+						background-color:#' + singleCallOpts.button.color['background'] + ';\
+						border-color:#' + singleCallOpts.button.color['border'] + ';\
+						color:#' + singleCallOpts.button.color['text_color'] + ';\
 					"';
 					
-					color_hover = singleCallOpts.buttons[i].color['hover_text_color'];
-					color_normal = singleCallOpts.buttons[i].color['text_color']
-					$(document).off('mouseenter', '#mp-overlayer #mp-overlayer-' + i + '-button');
-					$(document).off('mouseleave', '#mp-overlayer #mp-overlayer-' + i + '-button');
+					color_hover = singleCallOpts.button.color['hover_text_color'];
+					color_normal = singleCallOpts.button.color['text_color'];
+					$(document).off('mouseenter', '#mp-overlayer #mp-overlayer-1-button');
+					$(document).off('mouseleave', '#mp-overlayer #mp-overlayer-1-button');
 					$(document).on({
 	    				mouseenter: function() {
 	    					$(this).css({'color': '#' + color_hover});
@@ -180,7 +265,7 @@
 	    				mouseleave: function() {
 	    					$(this).css({'color': '#' + color_normal});
 	    				}
-					},'#mp-overlayer #mp-overlayer-' + i + '-button');
+					},'#mp-overlayer #mp-overlayer-1-button');
 				}
 				else {
 					if(!check_style(style))
@@ -190,35 +275,36 @@
 				}
 				
 				table += '\
-					<div style="width:' + width + '%" class="mp-message-content-buttons-button">\
-    					<a class="mp-overlayer_button_' + style + '" ' + color + ' id="mp-overlayer-' + i + '-button"'; 
+					<div style="width:100%" class="mp-message-content-buttons-button">\
+    					<a class="mp-overlayer_button_' + style + '" ' + color + ' id="mp-overlayer-1-button"'; 
 				
-				if(singleCallOpts.buttons[i]['action'] == undefined || singleCallOpts.buttons[i]['action'] == '')
+				if(singleCallOpts.button['action'] == undefined || singleCallOpts.button['action'] == '')
 				{
-					$(document).off('click', '#mp-overlayer #mp-overlayer-' + i + '-button');
-					$(document).on('click', '#mp-overlayer #mp-overlayer-' + i + '-button', function() {
+					$(document).off('click', '#mp-overlayer #mp-overlayer-1-button');
+					$(document).on('click', '#mp-overlayer #mp-overlayer-1-button', function() {
 						$.mpHide();
 					});
 				}
 				else {
-					action = singleCallOpts.buttons[i]['action'];
+					action = singleCallOpts.button['action'];
 					
-					$(document).off('click', '#mp-overlayer #mp-overlayer-' + i + '-button');
-					$(document).on('click', '#mp-overlayer #mp-overlayer-' + i + '-button', function() {
+					$(document).off('click', '#mp-overlayer #mp-overlayer-1-button');
+					$(document).on('click', '#mp-overlayer #mp-overlayer-1-button', function() {
 						action();
 						$.mpHide();
 					});
 				}
 				table += '>\
-						' + singleCallOpts.buttons[i]['button_text'] + '\
+						' + singleCallOpts.button['button_text'] + '\
 						</a>\
 					</div>\
 				';
+				
+				table += '\
+					<div style="clear:both;"></div>\
+					</div>\
+				';
 			}
-			table += '\
-				<div style="clear:both;"></div>\
-				</div>\
-			';
 		}
 		$('#mp-overlayer #mp-message-table').html(table);
 	}
@@ -281,10 +367,10 @@
 			border: '979797',
 			text_color: 'FFFFFF',
 			hover_text_color: '343434'
-		},
+		}
 	}
 	
-	$.metroPopup.defaults = {
+	$.metroPopup.multiple = {
 		message: '',
 		buttons: [{
 			button_text: 'Ok',
@@ -298,6 +384,22 @@
 				hover_text_color: '343434'
 			}
 		}]
+	}
+	
+	$.metroPopup.single = {
+		message: '',
+		button: {
+			button_text: 'Ok',
+			action: '',
+			color: {
+				style: 'default',
+				custom: false,
+				background: '81ADBC',
+				border: '979797',
+				text_color: 'FFFFFF',
+				hover_text_color: '343434'
+			}
+		}
 	}
 	
 })( jQuery );
