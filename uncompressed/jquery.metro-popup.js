@@ -1,6 +1,5 @@
-(function( $ ) {
-	
-	option_counter = 0;
+(function( $ ) 
+{	
 	opts = new Array();
 	obj = new Array();
 	objcounter = 0;
@@ -9,7 +8,15 @@
 	{
 		return this.each(function() 
 		{
-			opts[objcounter] = $.extend(true, $.fn.metroPopup.defaults, options);
+			if(options != undefined)
+			{				
+				options = optionsLoop(options, $.fn.metroPopup.defaults);
+			}
+			else {
+				options = $.extend(true, $.fn.metroPopup.defaults, options);
+			}
+			
+			opts[objcounter] = options;
     		$(this).click(onClick);
     		$(this).attr('data-mpid', objcounter);
     		
@@ -38,7 +45,7 @@
 			
 			return false;
 		}
-	}
+	},
 	
 	$.metroPopup = function(options)
 	{
@@ -46,31 +53,55 @@
 		multiple_buttons = false;
 		if($(options.buttons).length > 0)
 		{
-			arr = $.metroPopup.multiple;
-			ls = arr.buttons[0];
-			new_arr = options;
 			for(var i = 0; i < $(options.buttons).length; i++)
-			{
-				options.buttons[i] = $.extend(true, $.metroPopup.single.button, options.buttons[i]);
+			{				
+				options.buttons[i] = optionsLoop(options.buttons[i], $.metroPopup.single.button);
 			}
-
+			console.log(options);
 			singleCallOpts = options;
 			multiple_buttons = true;
 		}
 		else {
-			singleCallOpts = $.extend(true, $.metroPopup.single, options);
+			options = optionsLoop(options, $.metroPopup.single);
+			singleCallOpts = options;
 		}
-		
-		
 		createOverlayer(false);
 		setTable(false);
 		
 		$('#mp-overlayer').show();
-	}
+	},
 	
 	$.mpHide = function()
 	{
 		$('#mp-overlayer').hide();
+	};
+	
+	function optionsLoop(options, defaultOptions)
+	{
+		$.each(defaultOptions, function(parentKey, parentValue) {
+			if($.isPlainObject(parentValue))
+			{
+				$.each(parentValue, function(childKey, childValue) {
+					if(options[parentKey] == undefined)
+					{
+						options[parentKey] = parentValue;
+					}
+					
+					if(options[parentKey][childKey] == undefined)
+					{
+						options[parentKey][childKey] = childValue;
+					}
+				});
+			}
+			else {
+				if(options[parentKey] == undefined)
+				{
+					options[parentKey] = parentValue;
+				}
+			}
+		});
+		
+		return options;
 	}
 	
 	function createOverlayer(is_default)
@@ -368,23 +399,7 @@
 			text_color: 'FFFFFF',
 			hover_text_color: '343434'
 		}
-	}
-	
-	$.metroPopup.multiple = {
-		message: '',
-		buttons: [{
-			button_text: 'Ok',
-			action: '',
-			color: {
-				style: 'default',
-				custom: false,
-				background: '81ADBC',
-				border: '979797',
-				text_color: 'FFFFFF',
-				hover_text_color: '343434'
-			}
-		}]
-	}
+	},
 	
 	$.metroPopup.single = {
 		message: '',
@@ -400,6 +415,6 @@
 				hover_text_color: '343434'
 			}
 		}
-	}
+	};
 	
 })( jQuery );

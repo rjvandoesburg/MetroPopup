@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Metro pop-up</title>
-    <link rel="stylesheet" href="uncompressed/metro-popup.css" />
+    <link rel="stylesheet" href="metro-popup.min.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="helpers/highlight.css" />
 	<style>
 	@font-face {
@@ -165,7 +165,7 @@
 			$('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
 		});
 	</script>
-	<script type="text/javascript" src="uncompressed/jquery.metro-popup.js"></script>
+	<script type="text/javascript" src="jquery.metro-popup.min.js"></script>
 	
 </head>
 <body>
@@ -287,7 +287,7 @@ $(document).ready(function(){
 				Now maybe you just want to ask the user yes or no to an action, say submitting a form or clicking a link to go somewhere else.
 			</p>
 			<p>First we have our form. Note that you need to use "data-mpmessage" tag to set the message box question. By default this is "Are you sure you want to do this"</p>
-			<pre class="code" lang="html">
+			<pre class="code" lang="html" id="example4">
 			
 &lt;form method="get"&gt;
 	&lt;input type="text" name="input1" /&gt;
@@ -301,14 +301,14 @@ $(document).ready(function(){
 	$('.example4').metroPopup();
 });
 			</pre>
-			<form method="get">
-			    <input type="text" name="input1" value="test value" />
+			<form method="get" action="#example4">
+			    <input type="text" name="input1" value="example 4!" />
 			    <input type="submit" class="example4" data-mpmessage="This is a confirmation box (example4)" value="Submit this form" />
 			</form>
 			<p>
 				Now on this confirm box we can also change the text on the buttons.
 			</p>
-			<pre class="code" lang="html">
+			<pre class="code" lang="html" id="example5">
 			
 &lt;form method="get"&gt;
 	&lt;input type="text" name="input1" /&gt;
@@ -326,8 +326,8 @@ $(document).ready(function(){
 	});
 });
 			</pre>
-			<form method="get">
-			    <input type="text" name="input1" value="test value" />
+			<form method="get" action="#example5">
+			    <input type="text" name="input1" value="example 5!" />
 			    <input type="submit" class="example5" data-mpmessage="This is a confirmation box (example5)" value="Submit this form" />
 			</form>
 			<p>
@@ -362,10 +362,6 @@ $(document).ready(function(){
 			<p>
 				I've included 4 different styles: Blue (default), red, orange and green. You can set the button color by adding in the style of the button.
 			</p>
-			<pre class="code" lang="html">
-
-&lt;a href="http://www.google.com" target="_blank" data-mpmessage="Do you wish to open google in a new tab?" class="example6"&gt;Example 6&lt;/a&gt;
-			</pre>
 			<p>
 				For the button you need to add the color attribute and within that you add the style.
 			</p>
