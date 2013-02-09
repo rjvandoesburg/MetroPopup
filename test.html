@@ -153,26 +153,31 @@
 	<script>
 		$(document).ready(function(){
 
-			$('.example1').click(function(){
-				$.metroPopup({
-					message: 'Test',
-					buttons: [{
-						color: {
-							style: 'red'
-						}
-					},
-					{
-						color: {
-							style: 'orange'
-						}
-					},
-					{
-						color: {
-							style: 'green'
-						}
-					}]
-				});
+			$('.example1').metroPopup({
+				yes_text: 'Yes',
+				yes_color: {
+					custom: true,
+					background: '0f0',
+					border: '979797',
+					text_color: 'FFFFFF',
+					hover_text_color: '343434'
+				},
+				no_text: 'No',
+				no_color: {
+					custom: false,
+					background: 'f0f',
+					border: '979797',
+					text_color: 'FFFFFF',
+					hover_text_color: '343434'
+				}
 			});
+			/*$('.example1').click(function(e){
+				e.preventDefault();
+				$.metroPopup({
+					yes_text: 'Positive!',
+					no_text: 'Negative!'
+				});
+			});*/
 		});
 	</script>
 </body>

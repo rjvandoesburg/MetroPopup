@@ -102,7 +102,8 @@
 		color: #343434;
 		border:3px solid #2983b3;
 		border-left:none;
-		border-right:none;	
+		border-right:none;
+		color: #fff;
 	}
 	
 	#dialog-box a {
@@ -138,11 +139,12 @@
 	}
 	
 	#colors {
-		background-color: #6cbd3f;
+		background-color: #bd3f3f;
 		padding:10px;
-		border:3px solid #4ca51b;
+		border:3px solid #a51b1b;
 		border-left:none;
-		border-right:none;	
+		border-right:none;
+		color: #fff;
 	}
 	
 	#colors a {
@@ -165,7 +167,7 @@
 			$('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol'});
 		});
 	</script>
-	<script type="text/javascript" src="jquery.metro-popup.min.js"></script>
+	<script type="text/javascript" src="uncompressed/jquery.metro-popup.js"></script>
 	
 </head>
 <body>
@@ -209,7 +211,8 @@
 	&lt;script type="text/javascript" src="jquery.metro-popup.min.js"&gt;&lt;/script &gt;
 			</pre>
 			<p>
-				These files are minified, if you wish to edit the files, they are located in the sub-folder "uncompressed".
+				These files are minified, if you wish to edit the files, they are located in the sub-folder "uncompressed".<br />
+				<strong>The .js file needs to be imported after jQuery.</strong>
 			</p>
 		</div>
 		<div id="dialog-box">
@@ -387,7 +390,6 @@ $('.example7').click(function(){
 		}]
 	});
 });
-
 			</pre>
 			<p>
 				<a href="#" class="example7">Example 7</a>
@@ -397,20 +399,52 @@ $('.example7').click(function(){
 			</p>
 			<pre class="code" lang="js">
 			
-$('.example8').click(function(){
+$('.example8').click(function(e){
+	e.preventDefault();
 	$.metroPopup({
 		message: 'Test',
-		buttons: {
+		button: {
 			color: {
-				style: 'red'
+				custom: true,
+				background: 'bc81b6',
+				border: '826580',
+				text_color: '343434',
+				hover_text_color: 'fff'
 			}
 		}
 	});
 });
-
 			</pre>
 			<p>
 				<a href="#" class="example8">Example 8</a>
+			</p>
+			<p>
+				You can also make custom buttons for a dialog box
+			</p>
+			<pre class="code" lang="js">
+			
+$('.example9').metroPopup({
+	yes_text: 'Yes',
+	yes_color: {
+		custom: true,
+		background: 'bc81b6',
+		border: '826580',
+		text_color: '343434',
+		hover_text_color: 'fff'
+	},
+	no_text: 'No',
+	no_color: {
+		style: 'default',
+		custom: true,
+		background: '1869d7',
+		border: '1b55a5',
+		text_color: 'FFFFFF',
+		hover_text_color: '343434'
+	}
+});
+			</pre>
+			<p>
+				<a id="example9" href="#example9" class="example9" data-mpmessage="A dialog box with custom colors!">Example 9</a>
 			</p>
 		</div>
 	</div>
@@ -493,10 +527,34 @@ $('.example8').click(function(){
 					message: 'Test',
 					button: {
 						color: {
-							style: 'red'
+							custom: true,
+							background: 'bc81b6',
+							border: '826580',
+							text_color: '343434',
+							hover_text_color: 'fff'
 						}
 					}
 				});
+			});
+			
+			$('.example9').metroPopup({
+				yes_text: 'Yes',
+				yes_color: {
+					custom: true,
+					background: 'bc81b6',
+					border: '826580',
+					text_color: '343434',
+					hover_text_color: 'fff'
+				},
+				no_text: 'No',
+				no_color: {
+					style: 'default',
+					custom: true,
+					background: '1869d7',
+					border: '1b55a5',
+					text_color: 'FFFFFF',
+					hover_text_color: '343434'
+				}
 			});
 		});
 	</script>

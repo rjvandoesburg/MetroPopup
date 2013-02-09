@@ -70,9 +70,11 @@
 		
 		$('#mp-overlayer').show();
 	},
-	
 	$.mpHide = function()
 	{
+		/*
+		 * function that can be called by the user to hide the pop-up
+		 */
 		$('#mp-overlayer').hide();
 	};
 	
@@ -127,9 +129,20 @@
 	function setTable(is_default, id)
 	{
 		table = '';
+		/*
+		 * Check if it is a message box or a dialog box
+		 */
 		if(is_default)
 		{
+			/*
+			 * Dialog box
+			 */
 			yes_style = opts[id].yes_color['style'];
+			if(!check_style(yes_style))
+			{
+				yes_style = 'default';
+			}
+			
 			yes_color = '';
 			if(opts[id].yes_color['custom'] == true)
 			{
@@ -150,14 +163,13 @@
     				}
 				},'#mp-overlayer #mp-overlayer-yes-button');
 			}
-			else {
-				if(!check_style(yes_style))
-				{
-					yes_style = 'default';
-				}
-			}
 			
 			no_style = opts[id].no_color['style'];
+			if(!check_style(no_style))
+			{
+				no_style = 'default';
+			}
+			
 			no_color = '';
 			if(opts[id].no_color['custom'] == true)
 			{
@@ -178,12 +190,6 @@
     				}
 				},'#mp-overlayer #mp-overlayer-no-button');
 			}
-			else {
-				if(!check_style(no_style))
-				{
-					no_style = 'default';
-				}
-			}
 			
 			table += '\
 				<div id="mp-message-content-message"></div>\
@@ -202,18 +208,31 @@
 			';
 		}
 		else {
+			/*
+			 * Message box
+			 */
 			table += '\
 					<div id="mp-message-content-message">' + singleCallOpts.message + '</div>\
 					<div id="mp-message-content-buttons">\
 				';
 
-
+			/*
+			 * Check how many buttons the user wants to display
+			 */
 			if(multiple_buttons)
 			{
+				/*
+				 * If user has specified to use more than 1 button
+				 */
 				width = (100 / $(singleCallOpts.buttons).length);
 				for(var i = 0; i < $(singleCallOpts.buttons).length; i++)
 				{
 					style = singleCallOpts.buttons[i].color['style'];
+					if(!check_style(style))
+					{
+						style = 'default';
+					}
+					
 					color = '';
 					if(singleCallOpts.buttons[i].color['custom'] == true)
 					{
@@ -235,12 +254,6 @@
 		    					$(this).css({'color': '#' + color_normal});
 		    				}
 						},'#mp-overlayer #mp-overlayer-' + i + '-button');
-					}
-					else {
-						if(!check_style(style))
-						{
-							style = 'default';
-						}
 					}
 					
 					table += '\
@@ -275,10 +288,21 @@
 				';
 			}
 			else {
+				/*
+				 * If user has only specified 1 button
+				 */
 				style = singleCallOpts.button.color['style'];
+				if(!check_style(style))
+				{
+					style = 'default';
+				}
+				
 				color = '';
 				if(singleCallOpts.button.color['custom'] == true)
 				{
+					/*
+					 * Check if the user wants to use custom css settings via de plugin
+					 */
 					color = 'style="\
 						background-color:#' + singleCallOpts.button.color['background'] + ';\
 						border-color:#' + singleCallOpts.button.color['border'] + ';\
@@ -298,12 +322,6 @@
 	    				}
 					},'#mp-overlayer #mp-overlayer-1-button');
 				}
-				else {
-					if(!check_style(style))
-					{
-						style = 'default';
-					}
-				}
 				
 				table += '\
 					<div style="width:100%" class="mp-message-content-buttons-button">\
@@ -311,12 +329,18 @@
 				
 				if(singleCallOpts.button['action'] == undefined || singleCallOpts.button['action'] == '')
 				{
+					/*
+					 * Don't set an action if the user hasn't supplied one
+					 */
 					$(document).off('click', '#mp-overlayer #mp-overlayer-1-button');
 					$(document).on('click', '#mp-overlayer #mp-overlayer-1-button', function() {
 						$.mpHide();
 					});
 				}
 				else {
+					/*
+					 * Set the custom action set by the user
+					 */
 					action = singleCallOpts.button['action'];
 					
 					$(document).off('click', '#mp-overlayer #mp-overlayer-1-button');
@@ -339,7 +363,10 @@
 		}
 		$('#mp-overlayer #mp-message-table').html(table);
 	}
-	
+
+	/*
+	 * Check if provided valid style
+	 */
 	function check_style(needle)
 	{
 		haystack = Array('default','red','orange', 'green');
@@ -354,11 +381,17 @@
         
 	    return false;
 	}
-	
+
+	/*
+	 * When pressed on default no button, hide the pop-up
+	 */
 	$(document).on("click", '#mp-overlayer #mp-overlayer-no-button', function(e){
 		$.mpHide();
 	});
-	
+
+	/*
+	 * When pressed on default yes button, execute action
+	 */
 	$(document).on("click", '#mp-overlayer #mp-overlayer-yes-button', function(e){
 		id = $('#mp-overlayer #mp-overlayer-yes-button-id').val();
 		
@@ -379,7 +412,10 @@
 		
 		$('#mp-overlayer').hide();
 	});
-	
+
+	/*
+	 * Default settings for the dialog box
+	 */
 	$.fn.metroPopup.defaults = {
 		yes_text: 'Yes',
 		yes_color: {
@@ -400,7 +436,10 @@
 			hover_text_color: '343434'
 		}
 	},
-	
+
+	/*
+	 * Default settings for a single button
+	 */
 	$.metroPopup.single = {
 		message: '',
 		button: {
